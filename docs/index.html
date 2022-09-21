@@ -5,8 +5,9 @@
   <meta charset="utf-8">
   <title>Peter Kocsis</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
+  <meta content="Deep Learning, Low-Data Regime, Generalization, ResNet, Knowledge Distillation" name="keywords">
+  <meta name="description" content="The Unreasonable Effectiveness of Fully-Connected Layers for Low-Data Regimes">
+  <meta name="author" content="Peter Kocsis, Ismail Elezi, Peter Sukenik, Guillem Braso, Matthias Niessner, Laura Leal-Taixe">
   <!-- Favicon -->
   <link href="img/favicon.ico" rel="icon">
   <!-- Google Web Fonts -->
@@ -26,6 +27,9 @@
   <link href="css/style.css" rel="stylesheet">
   <!-- Font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="js/chart-tuils.min.js"></script>
+
 </head>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
@@ -73,34 +77,83 @@
     </div>
   </div>
   <!-- Header End -->
-  <!-- Video Modal Start -->
-  <div class="modal modal-video fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content rounded-0">
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel">Youtube Video</h3>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- 16:9 aspect ratio -->
-          <div class="ratio ratio-16x9">
-            <iframe class="embed-responsive-item" src="" id="video" allowfullscreen="" allowscriptaccess="always" allow="autoplay"></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Video Modal End -->
-  <!-- About Start -->
-  <div class="container-xxl py-6" id="about">
+  <!-- Abstract Start -->
+  <div class="container-xxl" id="abstract">
     <div class="container">
-      <div class="row g-5">
-        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-          <h1 class="display-3 mb-3">Coming soon</h1>
+      <div class="row wow fadeInLeft" data-wow-delay="0.1s">
+        <h1 class="display-32">Abstract</h1>
+        Convolutional neural networks were the standard for solving many computer vision tasks until recently, when Transformers of MLP-based architectures have started to show competitive performance. These architectures typically have a vast number of weights and need to be trained on massive datasets; hence, they are not suitable for their use in low-data regimes. In this work, we propose a simple yet effective framework to improve generalization from small amounts of data. We augment modern CNNs with fully-connected (FC) layers and show the massive impact this architectural change has in low-data regimes. We further present an online joint knowledge-distillation method to utilize the extra FC layers at train time but avoid them during test time. This allows us to improve the generalization of a CNN-based model without any increase in the number of weights at test time. We perform classification experiments for a large range of network backbones and several standard datasets on supervised learning and active learning. Our experiments significantly outperform the networks without fully-connected layers, reaching a relative improvement of up to 16% validation accuracy in the supervised setting without adding any extra parameters during inference. 
       </div>
     </div>
   </div>
-  <!-- About End -->
+  <!-- Abstract End -->
+
+  <!-- Method Start -->
+  <div class="container-xxl mt-5" id="method">
+    <div class="container">
+      <div class="row wow fadeInRight" data-wow-delay="0.5s">
+        <h1 class="display-32">Method</h1>
+
+        <h2 class="display-32 mt-3">Feature Refiner</h2>
+        <img src="img/feature_refiner.svg" alt="Feature Refiner" />
+        We propose a simple yet effective framework for improving the generalization from a small amount of data. In our work, we bring back fully-connected layers at the end of CNN-based architectures. We show that by adding as little as 0.37% extra parameters during training, we can significantly improve the generalization in the low-data regime. Our network architecture consists of two main parts: a convolutional backbone network and our proposed Feature Refiner (FR) based on multi-layer perceptrons. Our method is task and model-agnostic and can be applied to many convolutional networks. In our method, we extract features with the convolutional backbone network. Then, we apply our FR followed by a task-specific head. More precisely, we first reduce the feature dimension dbbf to df rf with a single linear layer to reduce the number of extra parameters. Then we apply a symmetric two-layer multi-layer perceptron wrapped around by normalization layers. 
+      
+        <h2 class="display-32 mt-3">Online Joint Knowledge Distillation</h2>
+        <img src="img/online_joint_knowledge_distillation.svg" alt="Online Joint Knowledge Distillation"/>
+        One could argue that using more parameters can improve the performance just because of the increased expressivity of the network. To disprove this argument, we develop an online joint knowledge distillation (OJKD) method. Our OJKD enables us to use the exact same architecture as our baseline networks during inference and utilizes our FR solely during training.  
+      </div>
+    </div>
+  </div>
+  <!-- Method End -->
+  <!-- Experiments Start -->
+  <div class="container-xxl mt-5" id="experiments">
+    <div class="container">
+      <div class="row wow fadeInLeft" data-wow-delay="0.5s">
+        <h1 class="display-32">Experiments</h1>
+        
+        <div class="col-lg-6 text-center">
+          <canvas id="supervised_cifar10" width="100" height="50"></canvas>
+        </div>
+        <div class="col-lg-6 text-center">
+          <canvas id="supervised_cifar100" width="100" height="50"></canvas>
+        </div>
+        <div class="col-lg-6 text-center">
+          <canvas id="supervised_caltech101" width="100" height="50"></canvas>
+        </div>
+        <div class="col-lg-6 text-center">
+          <canvas id="supervised_caltech256" width="100" height="50"></canvas>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <!-- Experiments End -->
+  <!-- Citation Start -->
+  <div class="container-fluid bg-light mt-5" id="citation">
+    <div class="container">
+      <div class="row justify-content-center">
+        <h1 class="display-32">Citation</h1>
+        <div class="col-lg-6">
+          @inproceedings{kocsis2022lowdataregime,<br>
+              author = {Peter Kocsis<br>
+                        and Ismail Elezi<br>
+                        and Peter Súkeník<br>
+                        and Guillem Brasó<br>
+                        and Matthias Niessner<br>
+                        and Laura Leal-Taixé},<br>
+              title = {The Unreasonable Effectiveness of Fully-Connected Layers for Low-Data Regimes},<br>
+              booktitle = {Proc. NeurIPS},<br>
+              year={2022}<br>
+          }
+        </div>
+        <div class="col-lg-2">
+          <button onclick="copy_text()" type="button" class="btn btn-light"><i class="fa fa-regular fa-copy" style="font-size: 2em"></i> Copy citation</button>
+        </div>
+        <div id="text_copied_message">Citation copied!</div>
+      </div>
+    </div>
+  </div>
+  <!-- Citation End -->
   
   <!-- JavaScript Libraries -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -115,6 +168,238 @@
   <script src="lib/lightbox/js/lightbox.min.js"></script>
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
+
+  <script>
+    function copy_text() {
+      var copyText = '@inproceedings{kocsis2022lowdataregime, \r\n\
+              author = {Peter Kocsis \r\n\
+                        and Ismail Elezi \r\n\
+                        and Peter Súkeník \r\n\
+                        and Guillem Brasó \r\n\
+                        and Matthias Niessner \r\n\
+                        and Laura Leal-Taixé}, \r\n\
+              title = {The Unreasonable Effectiveness of Fully-Connected Layers for Low-Data Regimes}, \r\n\
+              booktitle = {Proc. NeurIPS}, \r\n\
+              year={2022} \r\n\
+          }'
+      navigator.clipboard.writeText(copyText);
+      document.execCommand("copy");
+
+      // Get the snackbar DIV
+      var x = document.getElementById("text_copied_message");
+      
+      // Add the "show" class to DIV
+      x.className = "show";
+
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+    </script>
+
+    <script>
+      const Utils = ChartUtils.init();
+
+      // Supervised results
+      // CIFAR10
+      const supervised_cifar10_resnet18 = [46.18, 60.36, 69.22, 75.45, 80.23, 82.52, 84.08, 85.51, 86.59, 87.31];
+      const supervised_cifar10_frresnet18 = [53.7, 70.46, 76.81, 79.66, 82.27, 83.65, 84.48, 85.88, 86.42, 87.20];
+
+      // CIFAR100
+      const supervised_cifar100_resnet18 = [38.07, 41.72, 46.29, 50.06, 53.25, 55.84, 57.68, 58.94, 60.06, 61.22];
+      const supervised_cifar100_frresnet18 = [43.73, 48.52, 51.44, 54.51, 56.06, 57.50, 58.90, 60.15, 60.89, 61.70];
+      
+      // Caltech101
+      const supervised_caltech101_resnet18 = [84.33, 89.87, 92.78, 94.31, 94.94, 95.42];
+      const supervised_caltech101_frresnet18 = [83.46, 91.34, 93.56, 94.49, 95.21, 95.86];
+      
+      // Caltech256
+      const supervised_caltech256_resnet18 = [74.75, 76.34, 77.37, 78.06, 78.98, 79.65, 80.02, 80.57, 80.91, 81.28];
+      const supervised_caltech256_frresnet18 = [75.90, 77.30, 78.42, 79.39, 79.69, 80.24, 80.84, 81.25, 81.58, 81.85];
+
+      const totalDuration = 10000;
+      const delayBetweenPoints = totalDuration / 10;
+      const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+      const animation = {
+      y: {
+        easing: 'easeInOutElastic',
+        from: (ctx) => {
+          if (ctx.type === 'data') {
+            if (ctx.mode === 'default' && !ctx.dropped) {
+              ctx.dropped = true;
+              return 0;
+            }
+          }
+        }
+      }};
+
+      new Chart(document.getElementById("supervised_cifar10"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: supervised_cifar10_resnet18,
+              label: "ResNet18",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: supervised_cifar10_frresnet18,
+              label: "FR-ResNet18",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'Supervised - CIFAR10'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+        }});
+
+      new Chart(document.getElementById("supervised_cifar100"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: supervised_cifar100_resnet18,
+              label: "ResNet18",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: supervised_cifar100_frresnet18,
+              label: "FR-ResNet18",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'Supervised - CIFAR100'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+        }});
+
+        new Chart(document.getElementById("supervised_caltech101"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000],
+          datasets: [{ 
+              data: supervised_caltech101_resnet18,
+              label: "ResNet18",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: supervised_caltech101_frresnet18,
+              label: "FR-ResNet18",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'Supervised - Caltech101'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+        }});
+
+        new Chart(document.getElementById("supervised_caltech256"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: supervised_caltech256_resnet18,
+              label: "ResNet18",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: supervised_caltech256_frresnet18,
+              label: "FR-ResNet18",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'Supervised - Caltech256'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+        }});
+      </script>
 </body>
 
 </html>

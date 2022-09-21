@@ -428,3 +428,47 @@
 .testimonial-carousel .owl-dot.active::after {
     background: var(--primary);
 }
+
+/* The text_copied_message - position it at the bottom and in the middle of the screen */
+#text_copied_message {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    width: 200px; /* Set a default minimum width */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 20px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    bottom: 30px; /* 30px from the bottom */
+  }
+  
+  /* Show the text_copied_message when clicking on a button (class added with JavaScript) */
+  #text_copied_message.show {
+    visibility: visible; /* Show the text_copied_message */
+    /* Add animation: Take 0.5 seconds to fade in and out the text_copied_message.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  /* Animations to fade the text_copied_message in and out */
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
