@@ -28,7 +28,7 @@
   <!-- Font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="js/chart-tuils.min.js"></script>
+  <script src="js/chart-utils.min.js"></script>
 
 </head>
 
@@ -110,19 +110,63 @@
     <div class="container">
       <div class="row wow fadeInLeft" data-wow-delay="0.5s">
         <h1 class="display-32">Experiments</h1>
+
+        <ul class="nav nav-tabs nav-justified justify-content-center" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#one" type="button" role="tab" aria-controls="one" aria-selected="true">Supervised Learning</button>
+          </li>
+      
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#two" type="button" role="tab" aria-controls="two" aria-selected="false">Backbone agnosticism</button>
+          </li>
+        </ul>
+      
+        <div class="tab-content justify-content-center w-100">
+          <div class="tab-pane fade show active w-100" id="one">
+            <div class="row justify-content-center">
+              <div class="col-lg-6 text-center">
+                <canvas id="supervised_cifar10" width="100" height="50"></canvas>
+              </div>
+              <div class="col-lg-6 text-center">
+                <canvas id="supervised_cifar100" width="100" height="50"></canvas>
+              </div>
+              <div class="col-lg-6 text-center">
+                <canvas id="supervised_caltech101" width="100" height="50"></canvas>
+              </div>
+              <div class="col-lg-6 text-center">
+                <canvas id="supervised_caltech256" width="100" height="50"></canvas>
+              </div>
+            </div>
+            We compare the results of our method with those of ResNet18. On the first training cycle (1000 labels), our method outperforms ResNet18 by 7.6 percentage points (pp). On the second cycle, we outperform ResNet18 by more than 10pp. We keep outperforming ResNet18 until the seventh cycle, where our improvement is half a percentage point. For the remaining iterations, both methods reach the same accuracy. A common tendency for all datasets is that with an increasing number of labeled samples, the gap between our method and the baseline shrinks. Therefore, dropping the fully-connected layers in case of a large labeled dataset does not cause any disadvantage, as was found in [6]. However, that work did not analyze this question in the low-data regime, where using FC layers after CNN architectures is clearly beneficial.
+          </div>
+      
+          <div class="tab-pane fade w-100" id="two">
+            <div class="row justify-content-center">
+              <div class="col-lg-4 text-center">
+                <canvas id="backbone_resnet34_cifar10" width="50" height="50"></canvas>
+              </div>
+              <div class="col-lg-4 text-center">
+                <canvas id="backbone_densenet_cifar10" width="50" height="50"></canvas>
+              </div>
+              <div class="col-lg-4 text-center">
+                <canvas id="backbone_effnet_cifar10" width="50" height="50"></canvas>
+              </div>
+
+              <div class="col-lg-4 text-center">
+                <canvas id="backbone_resnet34_cifar100" width="50" height="50"></canvas>
+              </div>
+              <div class="col-lg-4 text-center">
+                <canvas id="backbone_densenet_cifar100" width="50" height="50"></canvas>
+              </div>
+              <div class="col-lg-4 text-center">
+                <canvas id="backbone_effnet_cifar100" width="50" height="50"></canvas>
+              </div>
+              We check if our method can be used with other backbones than ResNet18. The goal of the experiment is to show that our method is backbone agnostic and generalizes both to different versions of ResNet as well as to other types of convolutional neural networks. As we can see, our method significantly outperforms the baselines on both datasets and for all three types of backbones. 
+            </div>
+          </div>
+        </div>
         
-        <div class="col-lg-6 text-center">
-          <canvas id="supervised_cifar10" width="100" height="50"></canvas>
-        </div>
-        <div class="col-lg-6 text-center">
-          <canvas id="supervised_cifar100" width="100" height="50"></canvas>
-        </div>
-        <div class="col-lg-6 text-center">
-          <canvas id="supervised_caltech101" width="100" height="50"></canvas>
-        </div>
-        <div class="col-lg-6 text-center">
-          <canvas id="supervised_caltech256" width="100" height="50"></canvas>
-        </div>
+        
         
       </div>
     </div>
@@ -216,6 +260,30 @@
       const supervised_caltech256_resnet18 = [74.75, 76.34, 77.37, 78.06, 78.98, 79.65, 80.02, 80.57, 80.91, 81.28];
       const supervised_caltech256_frresnet18 = [75.90, 77.30, 78.42, 79.39, 79.69, 80.24, 80.84, 81.25, 81.58, 81.85];
 
+
+      // Backbone
+      // ResNet34
+      const backbone_resnet34_cifar10_resnet34 = [44.67, 60.29, 68.68, 76.09, 79.89, 82.80, 83.67, 85.80, 86.53, 87.43];
+      const backbone_resnet34_cifar10_frresnet34 = [48.88, 68.61, 76.28, 79.73, 82.26, 83.73, 84.99, 86.13, 86.76, 87.33];
+
+      const backbone_resnet34_cifar100_resnet34 = [32.82, 36.14, 43.16, 47.10, 49.95, 53.20, 55.25, 57.19, 59.47, 60.21];
+      const backbone_resnet34_cifar100_frresnet34 = [43.57, 48.69, 52.30, 54.29, 55.92, 58.11, 59.58, 60.92, 61.64, 63.07];
+
+      // DenseNet
+      const backbone_densenet_cifar10_densenet = [42.03, 53.43, 59.58, 64.85, 69.23, 73.35, 75.47, 76.96, 78.01, 78.82];
+      const backbone_densenet_cifar10_frdensenet = [46.25, 58.51, 65.85, 70.02, 73.03, 75.18, 76.34, 77.62, 78.56, 79.28];
+
+      const backbone_densenet_cifar100_densenet = [27.97, 30.61, 34.18, 35.63, 38.45, 40.17, 42.06, 42.92, 44.96, 46.16];
+      const backbone_densenet_cifar100_frdensenet = [33.38, 36.67, 38.99, 41.79, 43.85, 45.54, 47.10, 48.52, 49.09, 50.34];
+      
+      // EffNet
+      const backbone_effnet_cifar10_effnet = [25.47, 34.42, 50.99, 59.63, 63.51, 66.64, 67.22, 68.36, 69.89, 68.79];
+      const backbone_effnet_cifar10_freffnet = [47.31, 59.551, 66.67, 68.81, 72.00, 72.96, 74.22, 74.76, 76.61, 76.24];
+
+      const backbone_effnet_cifar100_effnet = [13.81, 17.59, 20.40, 22.34, 22.24, 26.16, 24.89, 24.61, 25.93, 26.94];
+      const backbone_effnet_cifar100_freffnet = [22.45, 23.46, 25.22, 27.57, 27.61, 26.89, 27.92, 30.50, 30.87, 33.41];
+
+
       const totalDuration = 10000;
       const delayBetweenPoints = totalDuration / 10;
       const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
@@ -231,6 +299,21 @@
           }
         }
       }};
+
+      const scales = {
+            x: {
+              title: {
+                display: true,
+                text: 'Dataset size'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Validation accuracy'
+              }
+            }
+          }
 
       new Chart(document.getElementById("supervised_cifar10"), {                
         type: 'line',
@@ -272,6 +355,7 @@
           interaction: {
             intersect: false
           },
+          scales
         }});
 
       new Chart(document.getElementById("supervised_cifar100"), {                
@@ -314,6 +398,7 @@
           interaction: {
             intersect: false
           },
+          scales
         }});
 
         new Chart(document.getElementById("supervised_caltech101"), {                
@@ -356,6 +441,7 @@
           interaction: {
             intersect: false
           },
+          scales
         }});
 
         new Chart(document.getElementById("supervised_caltech256"), {                
@@ -398,6 +484,262 @@
           interaction: {
             intersect: false
           },
+          scales
+        }});
+
+
+        new Chart(document.getElementById("backbone_resnet34_cifar10"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: backbone_resnet34_cifar10_resnet34,
+              label: "ResNet34",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: backbone_resnet34_cifar10_frresnet34,
+              label: "FR-ResNet34",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'ResNet34 - CIFAR10'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+          scales
+        }});
+        new Chart(document.getElementById("backbone_densenet_cifar10"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: backbone_densenet_cifar10_densenet,
+              label: "DenseNet121",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: backbone_densenet_cifar10_frdensenet,
+              label: "FR-DenseNet121",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'DenseNet121 - CIFAR10'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+          scales
+        }});
+        new Chart(document.getElementById("backbone_effnet_cifar10"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: backbone_effnet_cifar10_effnet,
+              label: "EfficientNetB3",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: backbone_effnet_cifar10_freffnet,
+              label: "FR-EfficientNetB3",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'EfficientNetB3 - CIFAR10'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+          scales
+        }});
+
+        new Chart(document.getElementById("backbone_resnet34_cifar100"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: backbone_resnet34_cifar100_resnet34,
+              label: "ResNet34",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: backbone_resnet34_cifar100_frresnet34,
+              label: "FR-ResNet34",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'ResNet34 - CIFAR100'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+          scales
+        }});
+        new Chart(document.getElementById("backbone_densenet_cifar100"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: backbone_densenet_cifar100_densenet,
+              label: "DenseNet121",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: backbone_densenet_cifar100_frdensenet,
+              label: "FR-DenseNet121",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'DenseNet121 - CIFAR100'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+          scales
+        }});
+        new Chart(document.getElementById("backbone_effnet_cifar100"), {                
+        type: 'line',
+        data: {
+          labels: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+          datasets: [{ 
+              data: backbone_effnet_cifar100_effnet,
+              label: "EfficientNetB3",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.blue,
+              fill: false
+            }, { 
+              data: backbone_effnet_cifar100_freffnet,
+              label: "FR-EfficientNetB3",
+              animations: {
+                y: {
+                  duration: 2000,
+                  delay: 1500
+                }
+              },
+              borderColor: Utils.CHART_COLORS.red,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'EfficientNetB3 - CIFAR100'
+              }
+          },
+          animation,
+          interaction: {
+            intersect: false
+          },
+          scales
         }});
       </script>
 </body>
