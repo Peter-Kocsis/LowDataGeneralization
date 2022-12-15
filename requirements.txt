@@ -1,0 +1,19 @@
+numpy>=1.19.2
+pandas==1.2.2
+gitpython==3.1.12
+matplotlib==3.3.3
+optuna==2.7.0
+tensorboard==2.11.0
+plotly==4.13.0
+scikit-learn==0.23.2
+pytorch-lightning==1.0.8
+torch==1.7.0+cu110
+torchvision==0.8.1+cu110
+-f https://download.pytorch.org/whl/torch_stable.html
+torchsummary==1.5.1
+pretrainedmodels==0.7.4
+filelock==3.0.12
+h2o_wave==0.13.0
+pygments==2.7.4
+pandas==1.2.2
+optuna==2.7.0

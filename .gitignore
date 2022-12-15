@@ -1,2 +1,34 @@
+# PyCharm relevant ignores
+.idea
+**/__pycache__
 
+# Project relevant ignores
+data/
+logs/
+
+!*/**/data/
+**/events.out.tfevents.*
+gui/h2o_wave.state
+
+h2o_wave.state
+
+**/.ipynb_checkpoints/
+
+gui/data/**
+
+lightning_logs/
+
+plots/
+
+*.db
+
+models/
+
+plot/generated_plots/
+
+*.xlsx
+
+wandb/
+
+external/simsiam/cache/
 docs/.vscode/
