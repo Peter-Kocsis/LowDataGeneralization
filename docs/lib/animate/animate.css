@@ -9,7 +9,7 @@
  */
 
 .animated {
-  animation-duration: 1s;
+  animation-duration: 0.7s;
   animation-fill-mode: both;
 }
 
@@ -604,8 +604,8 @@
 
 @keyframes fadeInLeft {
   from {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
+    opacity: 0.5;
+    transform: translate3d(-30%, 0, 0);
   }
 
   to {
@@ -636,8 +636,8 @@
 
 @keyframes fadeInRight {
   from {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0);
+    opacity: 0.5;
+    transform: translate3d(30%, 0, 0);
   }
 
   to {
